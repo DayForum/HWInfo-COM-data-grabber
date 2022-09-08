@@ -87,7 +87,7 @@ void setup() {
   
   String message = (String) temperature1 + ";" + pressure1 + ";" + altitude1 + ";"  + humidity1 + ";" + DewPoint1 + ";" + temperature2 + ";" + pressure2 + ";" + altitude2 + ";"  + humidity2 + ";" + DewPoint2;
   Serial.println(message);
-  delay(2000);
+  delay(750);
 }
 
 float calcDewpoint(float humi, float temp) {
