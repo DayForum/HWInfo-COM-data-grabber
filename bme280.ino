@@ -48,48 +48,46 @@ void setup() {
     Serial.begin(9600);
     while(!Serial);    // time to get serial running
     Serial.println(F("double BME280 with TCA9548A"));
-	
-	// NOTE!!! VERY IMPORTANT!!!
-	// Must call this once manually before first call to tcaselect()
-	Wire.begin();
   
-	// Before using any BME280, call tcaselect to select its output channel
-	tcaselect(0);      // TCA channel for bme1
-	bme1.begin();      // use the default address of 0x77
+  // NOTE!!! VERY IMPORTANT!!!
+  // Must call this once manually before first call to tcaselect()
+  Wire.begin();
+  
+  // Before using any BME280, call tcaselect to select its output channel
+  tcaselect(0);      // TCA channel for bme1
+  bme1.begin();      // use the default address of 0x77
 
-	tcaselect(1);      // TCA channel for bme2
-	bme2.begin();      // use the default address of 0x77
+  tcaselect(1);      // TCA channel for bme2
+  bme2.begin();      // use the default address of 0x77
 
     unsigned status;
 }
 
   void loop() {
-	float temperature1, temperature2;
-	float pressure1, pressure2;
-	float altitude1, altitude2;
-	float humidity1, humidity2;
-	float DewPoint1, DewPoint2;
+  float temperature1, temperature2;
+  float pressure1, pressure2;
+  float altitude1, altitude2;
+  float humidity1, humidity2;
+  float DewPoint1, DewPoint2;
 
-	// Read each device separately
-	tcaselect(0);
-	temperature1 = bme1.readTemperature();
-	pressure1 = bme1.readPressure() /1000;
-	altitude1 = bme1.readAltitude(1026);
-	humidity1 = bme1.readHumidity();
-	DewPoint1 = calcDewpoint(humidity1, temperature1);
-	
-	tcaselect(1);
-	temperature2 = bme2.readTemperature();
-	pressure2 = bme2.readPressure() /1000;
-	altitude2 = bme2.readAltitude(1026);
-	humidity2 = bme2.readHumidity();
-	DewPoint2 = calcDewpoint(humidity2, temperature2);
-	
-	String messageForCPU = (String) temperature1 + ";" + pressure1 + ";" + altitude1 + ";"  + humidity1 + ";" + DewPoint1;
-	String messageForGPU = (String) temperature2 + ";" + pressure2 + ";" + altitude2 + ";"  + humidity2 + ";" + DewPoint2;
-	Serial.println(messageForCPU);
-	Serial.println(messageForGPU);
-    delay(2000);
+  // Read each device separately
+  tcaselect(0);
+  temperature1 = bme1.readTemperature();
+  pressure1 = bme1.readPressure() /1000;
+  altitude1 = bme1.readAltitude(1026);
+  humidity1 = bme1.readHumidity();
+  DewPoint1 = calcDewpoint(humidity1, temperature1);
+  
+  tcaselect(1);
+  temperature2 = bme2.readTemperature();
+  pressure2 = bme2.readPressure() /1000;
+  altitude2 = bme2.readAltitude(1026);
+  humidity2 = bme2.readHumidity();
+  DewPoint2 = calcDewpoint(humidity2, temperature2);
+  
+  String message = (String) temperature1 + ";" + pressure1 + ";" + altitude1 + ";"  + humidity1 + ";" + DewPoint1 + ";" + temperature2 + ";" + pressure2 + ";" + altitude2 + ";"  + humidity2 + ";" + DewPoint2;
+  Serial.println(message);
+  delay(2000);
 }
 
 float calcDewpoint(float humi, float temp) {
