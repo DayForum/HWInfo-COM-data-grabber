@@ -52,13 +52,21 @@ void setup() {
   // NOTE!!! VERY IMPORTANT!!!
   // Must call this once manually before first call to tcaselect()
   Wire.begin();
-  
-  // Before using any BME280, call tcaselect to select its output channel
-  tcaselect(0);      // TCA channel for bme1
-  bme1.begin();      // use the default address of 0x77
 
-  tcaselect(1);      // TCA channel for bme2
-  bme2.begin();      // use the default address of 0x77
+  // Init sensor on bus number 2
+  tcaselect(6);
+  if (!bme1.begin(0x76)) {
+    Serial.println("not work 6");
+    while (1);
+  }
+  Serial.println();
+
+  tcaselect(7);
+  if (!bme2.begin(0x76)) {
+    Serial.println("not work 7");
+    while (1);
+  }
+  Serial.println();
 
     unsigned status;
 }
@@ -71,14 +79,14 @@ void setup() {
   float DewPoint1, DewPoint2;
 
   // Read each device separately
-  tcaselect(0);
+  tcaselect(6);
   temperature1 = bme1.readTemperature();
   pressure1 = bme1.readPressure() /1000;
   altitude1 = bme1.readAltitude(1026);
   humidity1 = bme1.readHumidity();
   DewPoint1 = calcDewpoint(humidity1, temperature1);
   
-  tcaselect(1);
+  tcaselect(7);
   temperature2 = bme2.readTemperature();
   pressure2 = bme2.readPressure() /1000;
   altitude2 = bme2.readAltitude(1026);
