@@ -14,7 +14,7 @@ prunsrv.exe provided by [Apache Commons](https://commons.apache.org/proper/commo
 - [TCA9548A](https://aliexpress.ru/item/4001042335251.html)
 
 #### Soldering
-![soldering](https://day.ainenya.dev/U022KWj0W0.png "soldering")
+![soldering](https://day.ainenya.dev/S2yo58PHJ9.png "soldering")
 
 #### Arduino IDE
 1 - Add support **WeMos D1 mini Pro**
@@ -25,7 +25,7 @@ prunsrv.exe provided by [Apache Commons](https://commons.apache.org/proper/commo
 
 - Tools -> Boards Manager:
 
-- `Adafruit BME280 Library`
+- `esp8266`
 
 2 - Install **BME280** library: 
 
